@@ -3,6 +3,7 @@
 // RECUPERO DATI
 require './data/info.php';
 
+// USO IL METODO ARRAY FILTER E ITERO SUGLI ELEMENTI DELL'ARRAY INFO.PHP
 $hotels_with_parking = array_filter($hotels, function($hotel) {
     return $hotel['parking'] === true;
 });
