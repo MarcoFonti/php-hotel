@@ -1,7 +1,12 @@
 <?php
 
 // RECUPERO DATI
-require './data/info.php'
+require './data/info.php';
+
+$hotels_with_parking = array_filter($hotels, function($hotel) {
+    return $hotel['parking'] === true;
+});
+
 
 ?>
 
@@ -20,37 +25,76 @@ require './data/info.php'
 </head>
 <body>
     <div class="container d-flex flex-column align-items-center justify-content-center">
-    <div class="card w-75 bg-info text-center mt-5">
-    <h1 class="text-danger">HOTEL DISPONIBILI</h1>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">NOME</th>
-                <th scope="col">DESCRIZIONE</th>
-                <th scope="col">PARCHEGGIO</th>
-                <th scope="col">VOTO</th>
-                <th scope="col">DISTANZA DAL CENTRO</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($hotels as $hotel) : ?>
-                <tr>
-                    <td scope="row"><?= $hotel['name']?></td>
-                    <td><?= $hotel['description'] ?></td>
-                    <td>
-                        <?php if(!$hotel['parking']) : ?>
-                            <i class="fa-solid fa-circle-xmark text-danger"></i>
-                        <?php else : ?>
-                            <i class="fa-solid fa-circle-check text-success"></i>
-                        <?php endif ?>
-                    </td>
-                    <td><?= $hotel['vote'] ?></td>
-                    <td><?= $hotel['distance_to_center'] ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    </div>
+        <div class="card w-75 bg-info text-center mt-5">
+            <h1 class="text-danger">HOTEL DISPONIBILI</h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">NOME</th>
+                        <th scope="col">DESCRIZIONE</th>
+                        <th scope="col">PARCHEGGIO</th>
+                        <th scope="col">VOTO</th>
+                        <th scope="col">DISTANZA DAL CENTRO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- CICLO PER RECUPERARE I VALORI -->
+                    <?php foreach ($hotels as $hotel) : ?>
+                    <tr>
+                        <td scope="row"><?= $hotel['name']?></td>
+                        <td><?= $hotel['description'] ?></td>
+                        <td>
+                            <?php if(!$hotel['parking']) : ?>
+                                <i class="fa-solid fa-circle-xmark text-danger"></i>
+                            <?php else : ?>
+                                <i class="fa-solid fa-circle-check text-success"></i>
+                            <?php endif ?>
+                        </td>
+                        <td><?= $hotel['vote'] ?></td>
+                        <td><?= $hotel['distance_to_center'] ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php if (empty($_GET)) : ?>
+            <form action="" method="get" class="d-flex flex-column align-items-center justify-content-center gap-2 mt-3">
+                <h6>per Hotel con parcheggio spuntare il checkbox e inviare</h6>
+                <input type="checkbox" name="hotel_parking">
+                <button>Invia</button>
+            </form>
+        <?php else : ?>
+            <div class="card w-75 bg-info text-center mt-5">
+            <h1 class="text-danger">HOTEL CON PARCHEGGIO</h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">NOME</th>
+                        <th scope="col">DESCRIZIONE</th>
+                        <th scope="col">PARCHEGGIO</th>
+                        <th scope="col">VOTO</th>
+                        <th scope="col">DISTANZA DAL CENTRO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- CICLO PER RECUPERARE I VALORI -->
+                    <?php foreach ($hotels_with_parking as $hotel) : ?>
+                    <tr>
+                        <td scope="row"><?= $hotel['name']?></td>
+                        <td><?= $hotel['description'] ?></td>
+                        <td>
+                            <?php if ($hotel['parking']) : ?>
+                                <i class="fa-solid fa-circle-check text-success"></i>
+                            <?php endif ?>
+                        </td>
+                        <td><?= $hotel['vote'] ?></td>
+                        <td><?= $hotel['distance_to_center'] ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <a href="./index.php" class="py-2 text-white w-25"> <- Torna indietro</a>
+        <? endif; ?>
     </div>
 </body>
 </html>
