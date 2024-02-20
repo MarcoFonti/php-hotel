@@ -11,24 +11,46 @@ require './data/info.php'
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP Hotel</title>
+    <!--  BOOTSTRAP -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css'
+        integrity='sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg=='
+        crossorigin='anonymous' />
+    <!-- LINK FONT-AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <h1>HOTEL</h1>
-    <ul>
-        <?php foreach ($hotels as $hotel) : ?>
-            <li><?= $hotel['name'] ?></li>
-            <li><?= $hotel['description'] ?></li>
-            <li>
-                <?php if(!$hotel['parking']) : ?>
-                    <span>x</span>
-                <?php else : ?>
-                    <span>v</span>
-                <?php endif ?>
-            </li>
-            <li><?= $hotel['vote'] ?></li>
-            <li><?= $hotel['distance_to_center'] ?></li>
-            <hr>
-        <?php endforeach; ?>
-    </ul>
+    <div class="container d-flex flex-column align-items-center justify-content-center">
+    <div class="card w-75 bg-info text-center mt-5">
+    <h1 class="text-danger">HOTEL DISPONIBILI</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">NOME</th>
+                <th scope="col">DESCRIZIONE</th>
+                <th scope="col">PARCHEGGIO</th>
+                <th scope="col">VOTO</th>
+                <th scope="col">DISTANZA DAL CENTRO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($hotels as $hotel) : ?>
+                <tr>
+                    <td scope="row"><?= $hotel['name']?></td>
+                    <td><?= $hotel['description'] ?></td>
+                    <td>
+                        <?php if(!$hotel['parking']) : ?>
+                            <i class="fa-solid fa-circle-xmark text-danger"></i>
+                        <?php else : ?>
+                            <i class="fa-solid fa-circle-check text-success"></i>
+                        <?php endif ?>
+                    </td>
+                    <td><?= $hotel['vote'] ?></td>
+                    <td><?= $hotel['distance_to_center'] ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    </div>
+    </div>
 </body>
 </html>
